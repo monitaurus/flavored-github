@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "Flavored GitHub",
+  "version": "1.0.1",
+  "description": “Flavours GitHub notifications and pull request files changed views.",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://github.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ]
+}
