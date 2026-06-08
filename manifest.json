@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Flavored GitHub",
   "version": "1.0.1",
-  "description": “Flavours GitHub notifications and pull request files changed views.",
+  "description": "Flavours GitHub notifications and pull request files changed views.",
   "permissions": [],
   "content_scripts": [
     {
