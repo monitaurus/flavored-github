@@ -165,9 +165,60 @@ function testNotificationsLogic() {
   console.log('Notifications Logic Tests Passed!');
 }
 
+function testSelectorUpdate() {
+  console.log('Running Selector Update Tests...');
+
+  function matchSelector(element, selector) {
+    const parts = selector.split(',').map(s => s.trim());
+    return parts.some(part => {
+      if (part === 'details') {
+        return element.tagName === 'details';
+      }
+      if (part === '.rgh-select-notifications') {
+        return element.classList.contains('rgh-select-notifications');
+      }
+      if (part === 'details.rgh-select-notifications') {
+        return element.tagName === 'details' && element.classList.contains('rgh-select-notifications');
+      }
+      if (part === 'action-menu.rgh-select-notifications') {
+        return element.tagName === 'action-menu' && element.classList.contains('rgh-select-notifications');
+      }
+      return false;
+    });
+  }
+
+  const mockActionMenu = {
+    tagName: 'action-menu',
+    classList: {
+      contains(c) { return c === 'rgh-select-notifications'; }
+    }
+  };
+  const selector = 'action-menu.rgh-select-notifications, details.rgh-select-notifications, .rgh-select-notifications, details';
+  assert.strictEqual(matchSelector(mockActionMenu, selector), true, 'action-menu with .rgh-select-notifications should be matched');
+
+  const mockDetailsRGH = {
+    tagName: 'details',
+    classList: {
+      contains(c) { return c === 'rgh-select-notifications'; }
+    }
+  };
+  assert.strictEqual(matchSelector(mockDetailsRGH, selector), true, 'details with .rgh-select-notifications should be matched');
+
+  const mockDetailsGeneric = {
+    tagName: 'details',
+    classList: {
+      contains(c) { return false; }
+    }
+  };
+  assert.strictEqual(matchSelector(mockDetailsGeneric, selector), true, 'generic details element should be matched');
+
+  console.log('Selector Update Tests Passed!');
+}
+
 // Run all tests
 try {
   testNotificationsLogic();
+  testSelectorUpdate();
   console.log('\nAll Tests Passed Successfully!');
 } catch (err) {
   console.error('Test Verification Failed:', err);

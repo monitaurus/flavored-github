@@ -12,7 +12,7 @@ function injectSelectDisposables() {
   const label = checkbox.closest('label');
   if (!label) return;
 
-  const details = header.querySelector('details');
+  const details = header.querySelector('action-menu.rgh-select-notifications, details.rgh-select-notifications, .rgh-select-notifications, details');
   let btn = header.querySelector('#select-disposables-btn');
   let dot = header.querySelector('#select-disposables-dot');
 
