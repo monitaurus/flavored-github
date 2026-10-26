@@ -117,10 +117,10 @@ function getFilesState() {
 
 // Retrieve viewed checkboxes
 function getViewedButtonsState() {
-  const buttons = document.querySelectorAll('button[class*="MarkAsViewedButton"]');
+  const buttons = document.querySelectorAll('button[class*="MarkAsViewedButton"], button[aria-label="Viewed"], button[aria-label="Not Viewed"]');
   const list = [];
   buttons.forEach(btn => {
-    const isViewed = btn.getAttribute('aria-pressed') === 'true';
+    const isViewed = btn.getAttribute('aria-pressed') === 'true' || btn.getAttribute('aria-label') === 'Viewed';
     list.push({ btn, isViewed });
   });
   return list;
@@ -301,7 +301,9 @@ startObserver();
 document.addEventListener('click', (e) => {
   const target = e.target.closest('button');
   if (target) {
-    const isViewedBtn = target.className.includes('MarkAsViewedButton');
+    const isViewedBtn = target.className.includes('MarkAsViewedButton') ||
+      target.getAttribute('aria-label') === 'Viewed' ||
+      target.getAttribute('aria-label') === 'Not Viewed';
     const isCollapseBtn = target.querySelector('svg[class*="chevron"]') || target.className.includes('DiffFileHeader');
     if (isViewedBtn || isCollapseBtn) {
       setTimeout(updateButtonsState, 150);

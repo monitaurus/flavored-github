@@ -215,10 +215,48 @@ function testSelectorUpdate() {
   console.log('Selector Update Tests Passed!');
 }
 
+function testViewedButtonsSelector() {
+  console.log('Running Viewed Buttons Selector Tests...');
+
+  function isViewedButton(element) {
+    const className = element.className || '';
+    const ariaLabel = element.getAttribute ? element.getAttribute('aria-label') : null;
+    return (
+      className.includes('MarkAsViewedButton') ||
+      ariaLabel === 'Viewed' ||
+      ariaLabel === 'Not Viewed'
+    );
+  }
+
+  // Legacy button class
+  const legacyBtn = new MockElement('button', ['MarkAsViewedButton_someHash']);
+  assert.strictEqual(isViewedButton(legacyBtn), true, 'Legacy MarkAsViewedButton should match');
+
+  // Primer React component button (current GitHub)
+  const primerBtnViewed = new MockElement('button', ['prc-Button-ButtonBase-9n-Xk', 'viewed__ObsxMH'], {
+    'aria-label': 'Viewed',
+    'aria-pressed': 'true'
+  });
+  assert.strictEqual(isViewedButton(primerBtnViewed), true, 'Primer Viewed button should match');
+
+  const primerBtnNotViewed = new MockElement('button', ['prc-Button-ButtonBase-9n-Xk'], {
+    'aria-label': 'Not Viewed',
+    'aria-pressed': 'false'
+  });
+  assert.strictEqual(isViewedButton(primerBtnNotViewed), true, 'Primer Not Viewed button should match');
+
+  // Random unrelated button
+  const randomBtn = new MockElement('button', ['btn'], { 'aria-label': 'Edit file' });
+  assert.strictEqual(isViewedButton(randomBtn), false, 'Unrelated button should not match');
+
+  console.log('Viewed Buttons Selector Tests Passed!');
+}
+
 // Run all tests
 try {
   testNotificationsLogic();
   testSelectorUpdate();
+  testViewedButtonsSelector();
   console.log('\nAll Tests Passed Successfully!');
 } catch (err) {
   console.error('Test Verification Failed:', err);

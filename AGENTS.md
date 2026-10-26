@@ -15,4 +15,4 @@ These guidelines assist subsequent AI agents in modifying and testing this codeb
 - Notification Checkbox: `.js-notification-bulk-action-check-item`
 - Top Header Container: `.Box-header`
 - File Changed Header: `div[class*="diff-file-header"]`
-- Viewed Button: `button[class*="MarkAsViewedButton"]`
+- Viewed Button: `button[class*="MarkAsViewedButton"], button[aria-label="Viewed"], button[aria-label="Not Viewed"]`
